@@ -1,0 +1,36 @@
+import pandas as pd
+df = pd.read_csv('creditcarddetect-sheet1.csv')
+print(df)
+
+# Check for missing values
+print(df.isnull().sum())
+
+# Remove Missing Values
+df_cleaned = df.dropna()
+print(df_cleaned)
+
+#Forward Fill
+df.ffill(inplace=True) # Forward fill
+print(df)
+
+# Backward Fill
+df.bfill(inplace=True) # Backward fill
+print(df)
+
+# Fill with Mode (For Categorical Data)
+df["Passed"].fillna(df["Passed"].mode()[0], inplace=True)
+
+#Remove Duplicates
+df.drop_duplicates(inplace=True)
+print(df)
+
+#One-Hot Encoding
+df_encoded = pd.get_dummies(df, columns=["Passed"],
+drop_first=True)
+print(df_encoded)
+
+#Label Encoding
+from sklearn.preprocessing import LabelEncoder
+encoder = LabelEncoder()
+df["Passed"] = encoder.fit_transform(df["Passed"])
+print(df)
